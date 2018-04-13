@@ -5,10 +5,8 @@ Goal: make tornadoes out of particles with interesting behaviours
 ## TODO
 
 - CODE CLEANUP!!!
-- change strokeWeight based on z
-- move tornadoes (perlin noise?)
-- add tornado collision with invisible walls and other tornadoes
-- add particle trail?
+- make the camera pan
+- add particle trail
 - add lighting?
 - add a floor?
 
@@ -21,3 +19,6 @@ Goal: make tornadoes out of particles with interesting behaviours
 - the tornado's shape is somewhat curved, not just a cone
 - particles are affected by perlin noise, it is stronger the lower it is. This somewhat ressembles a tornado. Can be improved
 - tornadoes can spin either way and can be moved, there can be more than one tornado
+- strokeWeight changes based on z
+- tornadoes move using perlin noise
+- added tornado collision with invisible walls and other tornadoes

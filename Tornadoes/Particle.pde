@@ -19,6 +19,8 @@ class Particle {
   }
   
     void display(float posx,float posz, float off) {
+      float depth = map(posz, -1000, 1000, 5, 8);
+      strokeWeight(depth);
       pushMatrix();
       translate(posx+off, 0, posz+off);
       rotateY(rotation);
