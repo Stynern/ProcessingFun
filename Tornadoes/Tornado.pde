@@ -48,10 +48,11 @@ class Tornado {
    } 
  }
  
- void display(float off) {
+ void display(float off, float camX, float camY, float camZ) {
+   float depth = map(dist(x,h/2,z, camX, camY, camZ), 1400, 3500, 6, 2);
    for (Particle p : particles) {
      float mult = map(p.y, -h, 0, 20, 200);
-     p.display(x,z, off*mult);
+     p.display(x,z, off*mult, round(depth));
    }
  }
  

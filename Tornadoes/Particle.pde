@@ -18,8 +18,7 @@ class Particle {
     rs = rotationSpeed + rand*0.02;
   }
   
-    void display(float posx,float posz, float off) {
-      float depth = map(posz, -1000, 1000, 5, 8);
+    void display(float posx,float posz, float off, int depth) {
       strokeWeight(depth);
       pushMatrix();
       translate(posx+off, 0, posz+off);

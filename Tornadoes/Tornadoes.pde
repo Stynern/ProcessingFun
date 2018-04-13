@@ -10,6 +10,9 @@ int floorXmin = -1000;
 int floorXmax = 1000;
 int floorZmin = -1000;
 int floorZmax = 1000;
+
+float cameraAngle = 0;
+float cameraDistance = 2000;
  
 void setup() {
   frameRate(30);
@@ -30,9 +33,13 @@ void setup() {
 
 void draw() {
   background(0);
-  camera(000.0, -1000, 2000.0, 
+  float camX = cameraDistance*cos(cameraAngle);
+  float camY = -1000;
+  float camZ = cameraDistance*sin(cameraAngle);
+  camera(camX, camY, camZ, 
          000.0, 000.0, 000.0, 
          0.0, 1.0, 0.0);
+  cameraAngle += 0.005;
   
   noStroke();
   fill(51);
@@ -55,7 +62,7 @@ void draw() {
     
     float wiggle = noise(noiseList[i])-0.5;
     tList.get(i).move(30*wiggle, tPos);
-    tList.get(i).display(wiggle);
+    tList.get(i).display(wiggle, camX, camY, camZ);
     noiseList[i] += 0.02;
   }
   
