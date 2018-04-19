@@ -16,7 +16,7 @@ float cameraAngle = 0;
 float cameraDistance = 2000;
 
 void setup() {
-  frameRate(30);
+  frameRate(20);
   size(900, 900, P3D);
   colorMode(HSB);
 

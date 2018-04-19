@@ -4,6 +4,7 @@ Goal: make tornadoes out of particles with interesting behaviours
 
 ## TODO
 
+- the collision detection doesn't seem to work all the time
 - code cleanup?
 - add a way to select how much of each type a mixed tornado should have?
 - make the room wrapping instead of walled?

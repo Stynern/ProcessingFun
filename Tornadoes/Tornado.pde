@@ -62,13 +62,22 @@ class Tornado {
           particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
         } else {
           // we assume the type is mixed
-          if (i % 2 == 0) {
-            particles.add(new Particle(px, y, pz, hue, rotationSpeed));
-            if (i % 3 == 0) particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
+          if (i % 3 == 0) {
+            if (i % 2 == 0)
+              particles.add(new Particle(px, y, pz, hue, rotationSpeed));
+            else
+              particles.add(new RisingParticle(px, y, pz, hue, rotationSpeed, this, angle));
           } else {
-            particles.add(new RisingParticle(px, y, pz, hue, rotationSpeed, this, angle));
-            if (i % 3 == 0) particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
-          }
+            particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
+          }          
+          
+          //if (i % 2 == 0) {
+          //  particles.add(new Particle(px, y, pz, hue, rotationSpeed));
+          //  if (i % 3 == 0) particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
+          //} else {
+          //  particles.add(new RisingParticle(px, y, pz, hue, rotationSpeed, this, angle));
+          //  if (i % 3 == 0) particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
+          //}
         }
       }
     }
@@ -106,7 +115,7 @@ class Tornado {
 
   // checks if the tornado is going to bump into something on the x axis
   boolean canMoveX(float off, ArrayList<PVector> tPos) {
-    int zone = 2*h/3 + 10;
+    int zone = h; //2*h/3 + 10;
     if (x+off <= xmin + zone || x+off - zone >= xmax)
       return false;
     for (PVector p : tPos) {
