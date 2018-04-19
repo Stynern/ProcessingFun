@@ -1,5 +1,5 @@
 
-int tCount = 3;
+int tCount = 4;
 ArrayList<Tornado> tList = new ArrayList<Tornado>();
 float[] noiseList = new float[tCount];
 float offx = random(100);
@@ -18,6 +18,11 @@ void setup() {
   frameRate(30);
   size(900, 900, P3D);
   colorMode(HSB);
+  String[] type = new String[4];
+  type[0] = "simple";
+  type[1] = "rising";
+  type[2] = "trailing";
+  type[3] = "mixed";
 
   for (int i = 0; i < tCount; i++) {
     int direction = floor(random(2)) == 0 ? -1 : 1;
@@ -25,7 +30,7 @@ void setup() {
     float z = random(floorZmin, floorZmax);
     //Tornado: height, hue, x, z, rotation speed, floor sizes
     Tornado t = new Tornado(300, random(360), x, z, direction*random(0.04, 0.06), floorXmin, floorXmax, floorZmin, floorZmax);
-    t.generate();
+    t.generate(type[i%4]);
     tList.add(t);
     noiseList[i] = random(100);
   }
@@ -36,8 +41,8 @@ void draw() {
   float camX = cameraDistance*cos(cameraAngle);
   float camY = -1000;
   float camZ = cameraDistance*sin(cameraAngle);
-  camera(camX, camY, camZ, 
-    000.0, 000.0, 000.0, 
+  camera(camX, camY, camZ,
+    000.0, 000.0, 000.0,
     0.0, 1.0, 0.0);
   cameraAngle += 0.005;
 

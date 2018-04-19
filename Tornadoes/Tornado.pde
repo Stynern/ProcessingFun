@@ -29,24 +29,40 @@ class Tornado {
     topWidth = h/3;
   }
 
-  void generate() {
-    for (int i = 0; i < h; i++) {
-      // distribute the particle more visually evenly across the height using normal distribution
-      // that is I force more particules towards the top as it has a larger radius
-      float rand = randomGaussian();
-      rand = abs(rand);
-      rand = rand % 2;
-      float y = map(rand, 0, 2, -h, 0);
+  void generate(String type) {
+    if (type != null) {
+      for (int i = 0; i < h; i++) {
+        // distribute the particle more visually evenly across the height using normal distribution
+        // that is I force more particles towards the top as it has a larger radius
+        float rand = randomGaussian();
+        rand = abs(rand);
+        rand = rand % 2;
+        float y = map(rand, 0, 2, -h, 0);
 
-      float r = calculateRadius(y);
-      float angle = random(-PI, PI);
-      float px = r*cos(angle);
-      float pz = r*sin(angle);
-      //particles.add(new Particle(px, y, pz, hue, rotationSpeed));
-      particles.add(new RisingParticle(px, y, pz, hue, rotationSpeed, this, angle));
+        float r = calculateRadius(y);
+        float angle = random(-PI, PI);
+        float px = r*cos(angle);
+        float pz = r*sin(angle);
+        if (type.equals("simple")) {
+          particles.add(new Particle(px, y, pz, hue, rotationSpeed));
+        } else if (type.equals("rising")) {
+          particles.add(new RisingParticle(px, y, pz, hue, rotationSpeed, this, angle));
+        } else if (type.equals("trailing")) {
+          particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
+        } else {
+          // we assume the type is mixed
+          if (i % 2 == 0) {
+            particles.add(new Particle(px, y, pz, hue, rotationSpeed));
+            if (i % 3 == 0) particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
+          } else {
+            particles.add(new RisingParticle(px, y, pz, hue, rotationSpeed, this, angle));
+            if (i % 3 == 0) particles.add(new TrailingParticle(px, y, pz, hue, rotationSpeed, angle, r, h));
+          }
+        }
+      }
     }
   }
-  
+
   float calculateRadius(float y) {
     float r = (float)Math.pow(map(y, h, 0, topWidth, 0), power);
     float temp = (float)Math.pow(topWidth, power);
@@ -54,18 +70,12 @@ class Tornado {
   }
 
   void display(float off, float camX, float camY, float camZ) {
-    // calculate the size of the dots to display 
+    // calculate the size of the dots to display
     float depth = map(dist(x, h/2, z, camX, camY, camZ), 1400, 3500, 6, 2);
     for (Particle p : particles) {
       float mult = map(p.y, -h, 0, 20, 200);
-      p.display(x, z, off*mult, round(depth));      
+      p.display(x, z, off*mult, round(depth));
     }
-    
-    // TODO: remove
-    //for(int i = 0; i<particles.size(); i++) {
-    //  float mult = map(particles.get(i).y, -h, 0, 20, 200);
-    //  particles.get(i).testDisplay(x, z, off*mult, round(depth), i == 0);
-    //}
   }
 
   void move(float off, ArrayList<PVector> tPos) {

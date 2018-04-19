@@ -6,9 +6,6 @@ Goal: make tornadoes out of particles with interesting behaviours
 
 - CODE CLEANUP!!!
 	+ comment variables and methods
-- make some of the particles have a trail
-	+ extend the particle class to have a type with trail
-	+ extend the particle class to have a type that is only trail
 - make the room wrapping instead of walled?
 - add lighting?
 - make 2 display for particles: one with the depth and one with that calculate the depth?
@@ -26,3 +23,7 @@ Goal: make tornadoes out of particles with interesting behaviours
 - tornadoes move using perlin noise
 - added tornado collision with invisible walls and other tornadoes (Can be improved)
 - made the camera pan, recalculated size of dots based on camera distance instead of z. the size is calculated for the tornado rather then each dot now
+- there are 3 type of particles
+	+ simple particles, spin around in the tornado
+	+ rising particles, go up while spining
+	+ trailing particles, only trails in the tornado

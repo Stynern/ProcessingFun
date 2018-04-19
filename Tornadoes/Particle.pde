@@ -18,7 +18,7 @@ class Particle {
     rs = rotationSpeed + rand*0.02;
   }
 
-  // the display method that TAKES the size of the dots as argument    
+  // the display method that TAKES the size of the dots as argument (depth)
   void display(float posx, float posz, float off, int depth) {
     strokeWeight(depth);
     pushMatrix();
@@ -32,8 +32,4 @@ class Particle {
     popMatrix();
     rotation += rs;
   }
-  
-  // TODO: remove
-  //void testDisplay(float posx, float posz, float off, int depth, boolean toPrint) {
-  //}
 }
