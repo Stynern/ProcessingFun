@@ -1,15 +1,19 @@
 class Particle {
+  // the position of the particle
   float x;
   float y;
   float z;
-  float hue;
-  float rotation = 0;
-  float rs;
+  
+  float hue;  // the hue of the particle
+  float rotation = 0;  // the rotation of the particle
+  float rs;  // the rotation speed of the particle
 
   Particle(float x_, float y_, float z_, float hue_, float rotationSpeed) {
     x = x_;
     y = y_;
     z = z_;
+
+    //  modify the hue and the speed to be slightly offset from the tornadoes values
     float rand = randomGaussian();
     rand = abs(rand);
     rand = rand % 3;

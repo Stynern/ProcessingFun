@@ -1,15 +1,17 @@
 class TrailingParticle extends Particle {
+  // the x and z values of the points we need to make a trail (curveVertex requires at least 4 points)
   float x0, x1, x3, x4, z0, z1, z3, z4;
 
   TrailingParticle(float x_, float y_, float z_, float hue_, float rotationSpeed, float angle, float r, int h) {
     super(x_, y_, z_, hue_, rotationSpeed);
 
+    // create offset of the original x and z on the same radius
     float diff = rotationSpeed*map(y, 0, -h, 0, 1.5);
     x0 = r*cos(angle-2*diff);
     z0 = r*sin(angle-2*diff);
     x1 = r*cos(angle-diff);
     z1 = r*sin(angle-diff);
-
+    // the original x and z are the center
     x3 = r*cos(angle+diff);
     z3 = r*sin(angle+diff);
     x4 = r*cos(angle+2*diff);
@@ -26,6 +28,8 @@ class TrailingParticle extends Particle {
 
     // Hue, Saturation, Brightness, Alpha
     stroke(hue, 255, 255, 200);
+    
+    // display our arc/trail
     noFill();
     beginShape();
     curveVertex(x0, y, z0);

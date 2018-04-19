@@ -1,16 +1,17 @@
+/* the "main" of this project */
 
-int tCount = 4;
-ArrayList<Tornado> tList = new ArrayList<Tornado>();
-float[] noiseList = new float[tCount];
-float offx = random(100);
-float offz = random(100);
-boolean record = false;
+int tCount = 4; // tornado count
+ArrayList<Tornado> tList = new ArrayList<Tornado>();  // array of tornadoes
+float[] noiseList = new float[tCount];  // noise array, one for each tornado
+boolean record = false;  // whether or not processing records what is displayed
 
+// floor dimensions
 int floorXmin = -1000;
 int floorXmax = 1000;
 int floorZmin = -1000;
 int floorZmax = 1000;
 
+// camera specs
 float cameraAngle = 0;
 float cameraDistance = 2000;
 
@@ -18,17 +19,21 @@ void setup() {
   frameRate(30);
   size(900, 900, P3D);
   colorMode(HSB);
+
+  // an array containg the types of particles names, enums are not great in processing
   String[] type = new String[4];
   type[0] = "simple";
   type[1] = "rising";
   type[2] = "trailing";
   type[3] = "mixed";
 
+  // generate tornadoes
   for (int i = 0; i < tCount; i++) {
     int direction = floor(random(2)) == 0 ? -1 : 1;
     float x = random(floorXmin, floorXmax);
     float z = random(floorZmin, floorZmax);
-    //Tornado: height, hue, x, z, rotation speed, floor sizes
+
+    //Tornado constructor: height, hue, x, z, rotation speed, floor sizes
     Tornado t = new Tornado(300, random(360), x, z, direction*random(0.04, 0.06), floorXmin, floorXmax, floorZmin, floorZmax);
     t.generate(type[i%4]);
     tList.add(t);
@@ -41,11 +46,12 @@ void draw() {
   float camX = cameraDistance*cos(cameraAngle);
   float camY = -1000;
   float camZ = cameraDistance*sin(cameraAngle);
-  camera(camX, camY, camZ,
-    000.0, 000.0, 000.0,
-    0.0, 1.0, 0.0);
-  cameraAngle += 0.005;
+  camera(camX, camY, camZ,  // cam position
+    000.0, 000.0, 000.0,  // what the cam is poiting at
+    0.0, 1.0, 0.0);  // what axis is up
+  cameraAngle += 0.005;  // rotate the camera
 
+  // draw the floor
   noStroke();
   fill(51);
   beginShape();
@@ -55,8 +61,7 @@ void draw() {
   vertex(floorXmax+200, 0, floorZmin-200);
   endShape();
 
-
-  //tPos.add(new PVector(x, z));
+  // move each tornado and then display it
   for (int i = 0; i < tCount; i++) {
     ArrayList<PVector> tPos = new ArrayList<PVector>();
     for (int j = 0; j < tCount; j++) {
@@ -76,6 +81,7 @@ void draw() {
   }
 }
 
+// start/stop recording if the mouse is clicked
 void mouseClicked() {
   record = !record;
 }

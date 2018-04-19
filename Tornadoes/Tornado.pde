@@ -1,19 +1,26 @@
 class Tornado {
-  ArrayList<Particle> particles = new ArrayList<Particle>();
+  ArrayList<Particle> particles = new ArrayList<Particle>();  // the particles of the tornado
   int h;  // the height of the tornado, we'll estimate the amount of particules from it
-  float hue;
+  float hue;  // the main hue of the tornado's particles  
+  float rotationSpeed;  // the main rotation speed of the tornado's particles
+  
+  // the position of the tornado
   float x;
   float z;
-  float rotationSpeed;
+  
+  // the position's limit
   int xmin;
   int xmax;
   int zmin;
   int zmax;
+  
+  // the direction of the tornado, can be 1 or -1. Used to orientate the tornado when it bumps into the edges or another tornado
   int dirx = 1;
   int dirz = 1;
+  
   float bWidth;      // the bottom width of the tornado
   float topWidth;    // the top width of the tornado
-  float power = 2;   // the value used to calculate the curve of the tornado
+  float power = 2;   // the value used to calculate the curve of the tornado, needs to be > 1
 
   Tornado(int h_, float hue_, float x_, float z_, float rs, int xmin_, int xmax_, int zmin_, int zmax_) {
     h = h_;
@@ -40,9 +47,13 @@ class Tornado {
         float y = map(rand, 0, 2, -h, 0);
 
         float r = calculateRadius(y);
+        
+        // calculate position based on a random angle and the radius
         float angle = random(-PI, PI);
         float px = r*cos(angle);
         float pz = r*sin(angle);
+        
+        // generate particles
         if (type.equals("simple")) {
           particles.add(new Particle(px, y, pz, hue, rotationSpeed));
         } else if (type.equals("rising")) {
@@ -63,6 +74,8 @@ class Tornado {
     }
   }
 
+  // calculate the radius
+  // power > 1 gives a curve similar to tornado
   float calculateRadius(float y) {
     float r = (float)Math.pow(map(y, h, 0, topWidth, 0), power);
     float temp = (float)Math.pow(topWidth, power);
@@ -78,18 +91,20 @@ class Tornado {
     }
   }
 
-  void move(float off, ArrayList<PVector> tPos) {
-    if (!canMoveX(off, tPos)) {
-      dirx *= -1;
-    }
-    x += dirx*off;
 
-    if (!canMoveZ(off, tPos)) {
+  void move(float off, ArrayList<PVector> tPos) {
+    if (!canMoveX(off, tPos))
+      dirx *= -1;
+    else
+      x += dirx*off;
+
+    if (!canMoveZ(off, tPos))
       dirz *= -1;
-    }
-    z += dirz*off;
+    else
+      z += dirz*off;
   }
 
+  // checks if the tornado is going to bump into something on the x axis
   boolean canMoveX(float off, ArrayList<PVector> tPos) {
     int zone = 2*h/3 + 10;
     if (x+off <= xmin + zone || x+off - zone >= xmax)
@@ -102,6 +117,7 @@ class Tornado {
     return true;
   }
 
+  // checks if the tornado is going to bump into something on the z axis
   boolean canMoveZ(float off, ArrayList<PVector> tPos) {
     int zone = 2*h/3 + 10;
     if (z+off <= zmin + zone || z+off - zone >= zmax)

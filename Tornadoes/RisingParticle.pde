@@ -19,7 +19,7 @@ class RisingParticle extends Particle {
     // Hue, Saturation, Brightness, Alpha
     stroke(hue, 255, 255, 200);
 
-    float r = owner.calculateRadius(y);
+    float r = owner.calculateRadius(y);  // the radius has to be recalculated as the particle rises up
     x = r*cos(angle);
     z = r*sin(angle);
     point(x, y, z);
@@ -29,8 +29,10 @@ class RisingParticle extends Particle {
   }
 
   float calculateY() {
-    float risingSpeed = rs;  // trying with rising speed based on rotation speed
-    float posY = y - Math.abs(risingSpeed)*50;
+    float risingSpeed = Math.abs(rs*50);  // trying with rising speed based on rotation speed
+    float posY = y - risingSpeed;
+    
+    // if we get higher than the top of the tornado, restart at the bottom
     if (posY < -owner.h )
       return 0;
     else
