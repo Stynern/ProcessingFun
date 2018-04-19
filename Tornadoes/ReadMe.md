@@ -5,9 +5,13 @@ Goal: make tornadoes out of particles with interesting behaviours
 ## TODO
 
 - CODE CLEANUP!!!
-- add particle trail
+	+ comment variables and methods
+- make some of the particles have a trail
+	+ extend the particle class to have a type with trail
+	+ extend the particle class to have a type that is only trail
+- make the room wrapping instead of walled?
 - add lighting?
-- add a floor?
+- make 2 display for particles: one with the depth and one with that calculate the depth?
 
 ## DONE
 
